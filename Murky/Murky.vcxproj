@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|x64">
@@ -9,20 +9,15 @@
       <Configuration>Release</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="src\Murky.h" />
-    <ClInclude Include="src\Murky\application.h" />
-    <ClInclude Include="src\Murky\core.h" />
-    <ClInclude Include="src\Murky\entry_point.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="src\Murky\application.cpp" />
+    <ProjectConfiguration Include="Dist|x64">
+      <Configuration>Dist</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <VCProjectVersion>16.0</VCProjectVersion>
+    <ProjectGuid>{7D7AB20D-E98E-DABE-B210-7E1E1EE4D6EF}</ProjectGuid>
+    <IgnoreWarnCompileDuplicatedFilename>true</IgnoreWarnCompileDuplicatedFilename>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{858e8dfb-9820-453e-b8ee-23281934f79d}</ProjectGuid>
     <RootNamespace>Murky</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
@@ -30,20 +25,23 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
-  </ImportGroup>
-  <ImportGroup Label="Shared">
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -51,43 +49,193 @@
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\$(ProjectName)\</OutDir>
-    <IntDir>$(SolutionDir)bin-int\$(Configuration)-$(Platform)\$(ProjectName)\</IntDir>
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>..\bin\Debug-windows-x86_64\Murky\</OutDir>
+    <IntDir>..\bin-int\Debug-windows-x86_64\Murky\</IntDir>
+    <TargetName>Murky</TargetName>
+    <TargetExt>.dll</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\$(ProjectName)\</OutDir>
-    <IntDir>$(SolutionDir)bin-int\$(Configuration)-$(Platform)\$(ProjectName)\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>..\bin\Release-windows-x86_64\Murky\</OutDir>
+    <IntDir>..\bin-int\Release-windows-x86_64\Murky\</IntDir>
+    <TargetName>Murky</TargetName>
+    <TargetExt>.dll</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>..\bin\Dist-windows-x86_64\Murky\</OutDir>
+    <IntDir>..\bin-int\Dist-windows-x86_64\Murky\</IntDir>
+    <TargetName>Murky</TargetName>
+    <TargetExt>.dll</TargetExt>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>mkpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>MK_PLATFORM_WINDOWS;MK_BUILD_DLL</PreprocessorDefinitions>
-      <ConformanceMode>true</ConformanceMode>
+      <PreprocessorDefinitions>MK_PLATFORM_WINDOWS;MK_BUILD_DLL;GLFW_INCLUDE_NONE;MK_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;3rdParty\glfw\include;3rdParty\glad\include;3rdParty\stb_image\include;3rdParty\base64\include;3rdParty\spdlog\include;3rdParty\glm\glm;3rdParty\glm\glm\detail;3rdParty\glm\glm\ext;3rdParty\glm\glm\gtc;3rdParty\glm\glm\gtx;3rdParty\glm\glm\simd;3rdParty\imgui;3rdParty\imgui\backends;include\imfilebrowser;include\json;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <ExternalWarningLevel>Level3</ExternalWarningLevel>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ImportLibrary>..\bin\Debug-windows-x86_64\Murky\Murky.lib</ImportLibrary>
     </Link>
+    <PostBuildEvent>
+      <Command>IF EXIST ..\bin\Debug-windows-x86_64\Murky\Murky.dll\ (xcopy /Q /E /Y /I ..\bin\Debug-windows-x86_64\Murky\Murky.dll ..\bin\Debug-windows-x86_64\CoolGame &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Debug-windows-x86_64\Murky\Murky.dll ..\bin\Debug-windows-x86_64\CoolGame &gt; nul)</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>mkpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>MK_PLATFORM_WINDOWS;MK_BUILD_DLL;GLFW_INCLUDE_NONE;MK_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;3rdParty\glfw\include;3rdParty\glad\include;3rdParty\stb_image\include;3rdParty\base64\include;3rdParty\spdlog\include;3rdParty\glm\glm;3rdParty\glm\glm\detail;3rdParty\glm\glm\ext;3rdParty\glm\glm\gtc;3rdParty\glm\glm\gtx;3rdParty\glm\glm\simd;3rdParty\imgui;3rdParty\imgui\backends;include\imfilebrowser;include\json;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>MK_PLATFORM_WINDOWS;MK_BUILD_DLL</PreprocessorDefinitions>
-      <ConformanceMode>true</ConformanceMode>
+      <MinimalRebuild>false</MinimalRebuild>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <ExternalWarningLevel>Level3</ExternalWarningLevel>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ImportLibrary>..\bin\Release-windows-x86_64\Murky\Murky.lib</ImportLibrary>
     </Link>
+    <PostBuildEvent>
+      <Command>IF EXIST ..\bin\Release-windows-x86_64\Murky\Murky.dll\ (xcopy /Q /E /Y /I ..\bin\Release-windows-x86_64\Murky\Murky.dll ..\bin\Release-windows-x86_64\CoolGame &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Release-windows-x86_64\Murky\Murky.dll ..\bin\Release-windows-x86_64\CoolGame &gt; nul)</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>mkpch.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>MK_PLATFORM_WINDOWS;MK_BUILD_DLL;GLFW_INCLUDE_NONE;MK_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;3rdParty\glfw\include;3rdParty\glad\include;3rdParty\stb_image\include;3rdParty\base64\include;3rdParty\spdlog\include;3rdParty\glm\glm;3rdParty\glm\glm\detail;3rdParty\glm\glm\ext;3rdParty\glm\glm\gtc;3rdParty\glm\glm\gtx;3rdParty\glm\glm\simd;3rdParty\imgui;3rdParty\imgui\backends;include\imfilebrowser;include\json;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <Optimization>Full</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <ExternalWarningLevel>Level3</ExternalWarningLevel>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ImportLibrary>..\bin\Dist-windows-x86_64\Murky\Murky.lib</ImportLibrary>
+    </Link>
+    <PostBuildEvent>
+      <Command>IF EXIST ..\bin\Dist-windows-x86_64\Murky\Murky.dll\ (xcopy /Q /E /Y /I ..\bin\Dist-windows-x86_64\Murky\Murky.dll ..\bin\Dist-windows-x86_64\CoolGame &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Dist-windows-x86_64\Murky\Murky.dll ..\bin\Dist-windows-x86_64\CoolGame &gt; nul)</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Murky.h" />
+    <ClInclude Include="src\Murky\core\Layer.h" />
+    <ClInclude Include="src\Murky\core\LayerStack.h" />
+    <ClInclude Include="src\Murky\core\Log.h" />
+    <ClInclude Include="src\Murky\core\application.h" />
+    <ClInclude Include="src\Murky\core\core.h" />
+    <ClInclude Include="src\Murky\core\entry_point.h" />
+    <ClInclude Include="src\Murky\input\input_key.h" />
+    <ClInclude Include="src\Murky\lighting\light.h" />
+    <ClInclude Include="src\Murky\math\maths.h" />
+    <ClInclude Include="src\Murky\math\transform.h" />
+    <ClInclude Include="src\Murky\math\vec2.h" />
+    <ClInclude Include="src\Murky\math\vec2Int.h" />
+    <ClInclude Include="src\Murky\rendering\ebo.h" />
+    <ClInclude Include="src\Murky\rendering\fbo.h" />
+    <ClInclude Include="src\Murky\rendering\frame_buffer.h" />
+    <ClInclude Include="src\Murky\rendering\gl_wrapper.h" />
+    <ClInclude Include="src\Murky\rendering\material.h" />
+    <ClInclude Include="src\Murky\rendering\mesh.h" />
+    <ClInclude Include="src\Murky\rendering\model.h" />
+    <ClInclude Include="src\Murky\rendering\rbo.h" />
+    <ClInclude Include="src\Murky\rendering\render_context.h" />
+    <ClInclude Include="src\Murky\rendering\shader.h" />
+    <ClInclude Include="src\Murky\rendering\texture2d.h" />
+    <ClInclude Include="src\Murky\rendering\vao.h" />
+    <ClInclude Include="src\Murky\rendering\vbo.h" />
+    <ClInclude Include="src\Murky\rendering\vertex.h" />
+    <ClInclude Include="src\Murky\ui\gui_elements.h" />
+    <ClInclude Include="src\Murky\ui\gui_panels.h" />
+    <ClInclude Include="src\Murky\ui\imgui_wrapper.h" />
+    <ClInclude Include="src\Murky\viewport\camera.h" />
+    <ClInclude Include="src\Murky\viewport\camera_flying.h" />
+    <ClInclude Include="src\Murky\viewport\window.hpp" />
+    <ClInclude Include="src\mkpch.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Murky\core\Layer.cpp" />
+    <ClCompile Include="src\Murky\core\LayerStack.cpp" />
+    <ClCompile Include="src\Murky\core\Log.cpp" />
+    <ClCompile Include="src\Murky\core\application.cpp" />
+    <ClCompile Include="src\Murky\input\input_key.cpp" />
+    <ClCompile Include="src\Murky\math\maths.cpp" />
+    <ClCompile Include="src\Murky\math\transform.cpp" />
+    <ClCompile Include="src\Murky\math\vec2.cpp" />
+    <ClCompile Include="src\Murky\math\vec2Int.cpp" />
+    <ClCompile Include="src\Murky\rendering\ebo.cpp" />
+    <ClCompile Include="src\Murky\rendering\fbo.cpp" />
+    <ClCompile Include="src\Murky\rendering\frame_buffer.cpp" />
+    <ClCompile Include="src\Murky\rendering\gl_wrapper.cpp" />
+    <ClCompile Include="src\Murky\rendering\material.cpp" />
+    <ClCompile Include="src\Murky\rendering\mesh.cpp" />
+    <ClCompile Include="src\Murky\rendering\model.cpp" />
+    <ClCompile Include="src\Murky\rendering\rbo.cpp" />
+    <ClCompile Include="src\Murky\rendering\shader.cpp" />
+    <ClCompile Include="src\Murky\rendering\texture2d.cpp" />
+    <ClCompile Include="src\Murky\rendering\vao.cpp" />
+    <ClCompile Include="src\Murky\rendering\vbo.cpp" />
+    <ClCompile Include="src\Murky\ui\gui_elements.cpp" />
+    <ClCompile Include="src\Murky\ui\gui_panels.cpp" />
+    <ClCompile Include="src\Murky\ui\imgui_wrapper.cpp" />
+    <ClCompile Include="src\Murky\viewport\camera.cpp" />
+    <ClCompile Include="src\Murky\viewport\camera_flying.cpp" />
+    <ClCompile Include="src\Murky\viewport\window.cpp" />
+    <ClCompile Include="src\mkpch.cpp">
+      <PrecompiledHeader>Create</PrecompiledHeader>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="3rdParty\glfw\GLFW.vcxproj">
+      <Project>{154B857C-0182-860D-AA6E-6C109684020F}</Project>
+    </ProjectReference>
+    <ProjectReference Include="3rdParty\glad\Glad.vcxproj">
+      <Project>{BDD6857C-A90D-870D-52FA-6C103E10030F}</Project>
+    </ProjectReference>
+    <ProjectReference Include="3rdParty\stb_image\Stb_Image.vcxproj">
+      <Project>{F065151F-5CD0-C995-A50E-7B3B11B8A7EA}</Project>
+    </ProjectReference>
+    <ProjectReference Include="3rdParty\base64\Base64.vcxproj">
+      <Project>{8A8BEFA8-762D-1A7F-5FE8-2DD34B29A1CF}</Project>
+    </ProjectReference>
+    <ProjectReference Include="3rdParty\imgui\ImGui.vcxproj">
+      <Project>{C0FF640D-2C14-8DBE-F595-301E616989EF}</Project>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

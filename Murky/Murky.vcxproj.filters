@@ -1,36 +1,213 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    <Filter Include="Murky">
+      <UniqueIdentifier>{7D7AB20D-E98E-DABE-B210-7E1E1EE4D6EF}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    <Filter Include="Murky\core">
+      <UniqueIdentifier>{15416E29-01F9-AF76-6A00-89D256D74A67}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    <Filter Include="Murky\input">
+      <UniqueIdentifier>{5C64A257-C819-1B4D-510E-1524BDC21151}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Murky\lighting">
+      <UniqueIdentifier>{C2C66431-AE94-5837-9728-C95D8395349C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Murky\math">
+      <UniqueIdentifier>{96817329-8239-B576-EB40-8ED2D7175067}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Murky\rendering">
+      <UniqueIdentifier>{2A645978-96EF-C63C-9F00-4A310B0B233D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Murky\ui">
+      <UniqueIdentifier>{CA9C9DCB-B669-F8D6-DF82-E67ECBAE2D65}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Murky\viewport">
+      <UniqueIdentifier>{6C1E5A68-58EC-4D6E-4180-BE942DED29D3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Murky\application.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="src\Murky.h" />
+    <ClInclude Include="src\Murky\core\Layer.h">
+      <Filter>Murky\core</Filter>
     </ClInclude>
-    <ClInclude Include="src\Murky\core.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="src\Murky\core\LayerStack.h">
+      <Filter>Murky\core</Filter>
     </ClInclude>
-    <ClInclude Include="src\Murky.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="src\Murky\core\Log.h">
+      <Filter>Murky\core</Filter>
     </ClInclude>
-    <ClInclude Include="src\Murky\entry_point.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="src\Murky\core\application.h">
+      <Filter>Murky\core</Filter>
     </ClInclude>
+    <ClInclude Include="src\Murky\core\core.h">
+      <Filter>Murky\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Murky\core\entry_point.h">
+      <Filter>Murky\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Murky\input\input_key.h">
+      <Filter>Murky\input</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Murky\lighting\light.h">
+      <Filter>Murky\lighting</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Murky\math\maths.h">
+      <Filter>Murky\math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Murky\math\transform.h">
+      <Filter>Murky\math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Murky\math\vec2.h">
+      <Filter>Murky\math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Murky\math\vec2Int.h">
+      <Filter>Murky\math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Murky\rendering\ebo.h">
+      <Filter>Murky\rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Murky\rendering\fbo.h">
+      <Filter>Murky\rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Murky\rendering\frame_buffer.h">
+      <Filter>Murky\rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Murky\rendering\gl_wrapper.h">
+      <Filter>Murky\rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Murky\rendering\material.h">
+      <Filter>Murky\rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Murky\rendering\mesh.h">
+      <Filter>Murky\rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Murky\rendering\model.h">
+      <Filter>Murky\rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Murky\rendering\rbo.h">
+      <Filter>Murky\rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Murky\rendering\render_context.h">
+      <Filter>Murky\rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Murky\rendering\shader.h">
+      <Filter>Murky\rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Murky\rendering\texture2d.h">
+      <Filter>Murky\rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Murky\rendering\vao.h">
+      <Filter>Murky\rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Murky\rendering\vbo.h">
+      <Filter>Murky\rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Murky\rendering\vertex.h">
+      <Filter>Murky\rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Murky\ui\gui_elements.h">
+      <Filter>Murky\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Murky\ui\gui_panels.h">
+      <Filter>Murky\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Murky\ui\imgui_wrapper.h">
+      <Filter>Murky\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Murky\viewport\camera.h">
+      <Filter>Murky\viewport</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Murky\viewport\camera_flying.h">
+      <Filter>Murky\viewport</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Murky\viewport\window.hpp">
+      <Filter>Murky\viewport</Filter>
+    </ClInclude>
+    <ClInclude Include="src\mkpch.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Murky\application.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="src\Murky\core\Layer.cpp">
+      <Filter>Murky\core</Filter>
     </ClCompile>
+    <ClCompile Include="src\Murky\core\LayerStack.cpp">
+      <Filter>Murky\core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Murky\core\Log.cpp">
+      <Filter>Murky\core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Murky\core\application.cpp">
+      <Filter>Murky\core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Murky\input\input_key.cpp">
+      <Filter>Murky\input</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Murky\math\maths.cpp">
+      <Filter>Murky\math</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Murky\math\transform.cpp">
+      <Filter>Murky\math</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Murky\math\vec2.cpp">
+      <Filter>Murky\math</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Murky\math\vec2Int.cpp">
+      <Filter>Murky\math</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Murky\rendering\ebo.cpp">
+      <Filter>Murky\rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Murky\rendering\fbo.cpp">
+      <Filter>Murky\rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Murky\rendering\frame_buffer.cpp">
+      <Filter>Murky\rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Murky\rendering\gl_wrapper.cpp">
+      <Filter>Murky\rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Murky\rendering\material.cpp">
+      <Filter>Murky\rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Murky\rendering\mesh.cpp">
+      <Filter>Murky\rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Murky\rendering\model.cpp">
+      <Filter>Murky\rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Murky\rendering\rbo.cpp">
+      <Filter>Murky\rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Murky\rendering\shader.cpp">
+      <Filter>Murky\rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Murky\rendering\texture2d.cpp">
+      <Filter>Murky\rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Murky\rendering\vao.cpp">
+      <Filter>Murky\rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Murky\rendering\vbo.cpp">
+      <Filter>Murky\rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Murky\ui\gui_elements.cpp">
+      <Filter>Murky\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Murky\ui\gui_panels.cpp">
+      <Filter>Murky\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Murky\ui\imgui_wrapper.cpp">
+      <Filter>Murky\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Murky\viewport\camera.cpp">
+      <Filter>Murky\viewport</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Murky\viewport\camera_flying.cpp">
+      <Filter>Murky\viewport</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Murky\viewport\window.cpp">
+      <Filter>Murky\viewport</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mkpch.cpp" />
   </ItemGroup>
 </Project>
