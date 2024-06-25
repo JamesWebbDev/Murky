@@ -3,10 +3,13 @@
 
 #include "../core/core.h"
 
+#include "../events/ApplicationEvent.h"
 #include "../math/vec2Int.h"
 
 // Forward declare GLFWwindow to avoid including glfw3.h
 struct GLFWwindow;
+
+#define BIND_EVENT_FN(x) std::bind(&x, this, std::placeholders::_1)
 
 namespace Murky
 {
@@ -20,9 +23,18 @@ namespace Murky
 		virtual void Render();
 		virtual void PollInputs();
 
+		using EventCallbackFn = std::function<void(Event&)>;
+
 		bool ShouldWindowClose(void) const noexcept;
-		Vec2Int GetWindowSize(void) const noexcept;
 		GLFWwindow* GetGLFWWindow(void) const noexcept { return m_wnd; }
+
+		inline unsigned int GetWidth() const { return m_data.Width; }
+		inline unsigned int GetHeight() const { return m_data.Height; }
+
+		inline void SetEventCallback(const EventCallbackFn& callback) { m_data.EventCallback = callback; }
+		virtual void OnEvent(Event& e);
+		
+		bool OnWindowClose(WindowCloseEvent& e);
 
 	protected:
 		virtual void OnInit() {}
@@ -37,6 +49,15 @@ namespace Murky
 		double GetTime(void);
 
 		GLFWwindow* m_wnd = NULL;
+
+		struct WindowData
+		{
+			std::string Title;
+			unsigned int Width, Height;
+			EventCallbackFn EventCallback;
+		};
+
+		WindowData m_data;
 
 	};
 }

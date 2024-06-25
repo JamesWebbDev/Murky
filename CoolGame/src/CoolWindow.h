@@ -5,7 +5,7 @@
 class CoolWindow : public::Murky::Window
 {
 public:
-
+	
 	virtual void OnInit() override;
 	virtual void Tick() override;
 	virtual void Render() override;
@@ -13,13 +13,24 @@ public:
 	virtual void OnDestroy() override;
 
 	void SetMouseMode(bool isMouseLocked) const noexcept;
-	void PollFreeze(bool& frozenState);
+	
 	void PollExit();
 
 	std::function<void(const std::string&)> SetModelAsFunction();
 	void SetModel(const std::string& file);
 
 	void SetShader(const std::string& file);
+
+	virtual void OnEvent(Murky::Event& e) override;
+
+	
+	bool OnMouseMoved(Murky::MouseMovedEvent& e);
+	bool OnMouseScrolled(Murky::MouseScrolledEvent& e);
+	bool OnKeyPressed(Murky::KeyPressedEvent& e);
+	bool OnWindowResize(Murky::WindowResizeEvent& e);
+
+	void FlipFlopCamFreeze(Murky::KeyPressedEvent& e);
+	void CloseWindow(Murky::KeyPressedEvent& e);
 private:
 
 	Murky::LayerStack m_layerStack;

@@ -6,7 +6,6 @@ namespace Murky
 {
 	Application::Application()
 	{
-
 	}
 
 	Application::~Application()
@@ -16,8 +15,10 @@ namespace Murky
 
 	void Application::Run()
 	{
-		while (true);
+		while (true)
+		{
+			MK_ENG_WARN("Running Default Application");
+		}
 	}
-
 }
 

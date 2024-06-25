@@ -5,6 +5,7 @@
 #include <Murky/core/entry_point.h>
 // ---------------------------------
 
+
 class CoolGame : public Murky::Application
 {
 public:
@@ -16,11 +17,10 @@ public:
 		{
 			MK_ERROR("Failed to create new Cool Window!");
 		}
-		
 	}
 	virtual ~CoolGame() override
 	{
-
+		
 	}
 
 	virtual void Run() override
@@ -31,6 +31,8 @@ public:
 			m_CoolWindow->Render();
 			m_CoolWindow->PollInputs();
 		}
+
+
 	}
 
 	std::unique_ptr<CoolWindow> m_CoolWindow;

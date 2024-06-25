@@ -17,11 +17,10 @@ namespace Murky
 				  Up =		 glm::vec3(0.0f, 1.0f, 0.0f);
 		glm::mat4 View = glm::mat4(1.0f), Projection = glm::mat4(1.0f);
 
-		void register_window_callbacks(GLFWwindow* window) const;
-
 		void SetNearFar(float zNear, float zFar);
 		void SetAspectRatio(float aspectRatio);
 		void UpdateView();
+		void SetViewportSize(int width, int height);
 
 	protected:
 		float n_fov = 45.0f, n_aspect_ratio = 16 / 9, n_z_near = 0.1f, n_z_far = 100;
@@ -30,7 +29,6 @@ namespace Murky
 		
 		void SetPerspectiveProjection();
 
-		void window_resize_callback(GLFWwindow* w, int width, int height);
 		Camera* m_ptr = this; // Used to guide where callbacks should be received from
 	};
 }

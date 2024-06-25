@@ -7,6 +7,9 @@
     <Filter Include="Murky\core">
       <UniqueIdentifier>{15416E29-01F9-AF76-6A00-89D256D74A67}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Murky\events">
+      <UniqueIdentifier>{E1EB2443-CD4E-B4E7-76D4-EC9D6216806A}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Murky\input">
       <UniqueIdentifier>{5C64A257-C819-1B4D-510E-1524BDC21151}</UniqueIdentifier>
     </Filter>
@@ -45,6 +48,18 @@
     </ClInclude>
     <ClInclude Include="src\Murky\core\entry_point.h">
       <Filter>Murky\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Murky\events\ApplicationEvent.h">
+      <Filter>Murky\events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Murky\events\Event.h">
+      <Filter>Murky\events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Murky\events\KeyEvent.h">
+      <Filter>Murky\events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Murky\events\MouseEvent.h">
+      <Filter>Murky\events</Filter>
     </ClInclude>
     <ClInclude Include="src\Murky\input\input_key.h">
       <Filter>Murky\input</Filter>

@@ -2,6 +2,8 @@
 #define MK_APPLICATION_H
 
 #include "core.h"
+#include "../events/ApplicationEvent.h"
+#include "../viewport/window.hpp"
 
 namespace Murky
 {

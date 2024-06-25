@@ -7,6 +7,11 @@
 #include "Murky/core/Log.h"
 #include "Murky/core/LayerStack.h"
 
+#include "Murky/events/Event.h"
+#include "Murky/events/ApplicationEvent.h"
+#include "Murky/events/KeyEvent.h"
+#include "Murky/events/MouseEvent.h"
+
 #include "Murky/viewport/window.hpp"
 #include "Murky/input/input_key.h"
 #include "Murky/viewport/camera_flying.h"

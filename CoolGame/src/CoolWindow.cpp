@@ -34,11 +34,10 @@ void CoolWindow::OnInit()
 
 
 	m_camera = std::make_unique<FlyingCamera>();
-	m_camera->register_window_callbacks(m_wnd);
-	m_camera->register_input_callbacks(m_wnd);
-	Vec2Int windowSize = GetWindowSize();
+	//m_camera->register_window_callbacks(m_wnd);
+	//m_camera->register_input_callbacks(m_wnd);
 	m_camera->SetNearFar(0.3f, 1000.f);
-	m_camera->SetAspectRatio((float)windowSize.x / (float)windowSize.y);
+	m_camera->SetAspectRatio((float)GetWidth() / (float)GetHeight());
 	m_camera->Position = glm::vec3(0.0f, 3.0f, 15.0f);
 	
 	Murky::MurkyGui::InitGui(m_wnd);
@@ -46,7 +45,6 @@ void CoolWindow::OnInit()
 	auto tempScenePtr = (SceneLayer*)m_layerStack.PushLayer((Layer*)new SceneLayer);
 	auto tempPropertiesPtr = (PropertiesLayer*)m_layerStack.PushOverlay((Layer*)new PropertiesLayer);
 	
-
 	tempPropertiesPtr->OnAttach();
 	tempScenePtr->OnAttach();
 
@@ -56,7 +54,7 @@ void CoolWindow::OnInit()
 	tempScenePtr->SetModelLitPtr(tempPropertiesPtr->GetLitModelValue());
 	tempScenePtr->SetLightDirPtr(tempPropertiesPtr->GetLightDirValue());
 	tempScenePtr->SetCamera(m_camera);
-	tempScenePtr->SetFrameBuffer(windowSize.x, windowSize.y);
+	tempScenePtr->SetFrameBuffer(GetWidth(), GetHeight());
 }
 
 void CoolWindow::Tick()
@@ -97,14 +95,56 @@ void CoolWindow::PollInputs()
 {
 	
 	pollWindowEvents();
-	PollFreeze(isCamFrozen);
-	PollExit();
+	//PollFreeze(isCamFrozen);
+	//PollExit();
 	m_camera->poll_move_inputs(m_wnd, m_deltaTime);
 }
 
 void CoolWindow::OnDestroy()
 {
 	Murky::MurkyGui::Shutdown();
+}
+
+void CoolWindow::OnEvent(Murky::Event& e) 
+{
+	MK_TRACE("Overriden!");
+	Murky::EventDispatcher dispatcher(e);
+	dispatcher.Dispatch<Murky::WindowCloseEvent>(BIND_EVENT_FN(Murky::Window::OnWindowClose));
+	//MK_TRACE("evebt {0}", e.ToString());
+	dispatcher.Dispatch<Murky::MouseMovedEvent>(BIND_EVENT_FN(CoolWindow::OnMouseMoved));
+
+	dispatcher.Dispatch<Murky::MouseScrolledEvent>(BIND_EVENT_FN(CoolWindow::OnMouseScrolled));
+	
+	dispatcher.Dispatch<Murky::KeyPressedEvent>(BIND_EVENT_FN(CoolWindow::OnKeyPressed));
+
+	dispatcher.Dispatch<Murky::WindowResizeEvent>(BIND_EVENT_FN(CoolWindow::OnWindowResize));
+}
+
+bool CoolWindow::OnMouseMoved(Murky::MouseMovedEvent& e)
+{
+	m_camera->RotateCamera(e);
+	return true;
+}
+
+bool CoolWindow::OnMouseScrolled(Murky::MouseScrolledEvent& e)
+{
+	m_camera->ZoomCamera(e);
+	return true;
+}
+
+bool CoolWindow::OnKeyPressed(Murky::KeyPressedEvent& e)
+{
+	FlipFlopCamFreeze(e);
+	CloseWindow(e);
+	//m_camera->MoveCamera(e, m_deltaTime);
+
+	return true;
+}
+
+bool CoolWindow::OnWindowResize(Murky::WindowResizeEvent& e)
+{
+	m_camera->SetViewportSize(e.GetWidth(), e.GetHeight());
+	return true;
 }
 
 
@@ -114,20 +154,30 @@ void CoolWindow::SetMouseMode(bool isMouseLocked) const noexcept
 	setCursorMode(cursorState);
 }
 
-void CoolWindow::PollFreeze(bool& frozenState)
+void CoolWindow::FlipFlopCamFreeze(Murky::KeyPressedEvent& e)
 {
-	m_input_freeze.PollKeyInput();
-
-	if (m_input_freeze.GetKeyDown())
+	if (e.GetKeyCode() != GLFW_KEY_F)
 	{
-		frozenState = !frozenState;
-		SetMouseMode(frozenState);
-
-		if (m_camera != NULL)
-		{
-			m_camera->set_is_frozen(m_wnd, frozenState);
-		}
+		return;
 	}
+
+	isCamFrozen = !isCamFrozen;
+	SetMouseMode(isCamFrozen);
+
+	if (m_camera != NULL)
+	{
+		m_camera->set_is_frozen(m_wnd, isCamFrozen);
+	}
+}
+
+void CoolWindow::CloseWindow(Murky::KeyPressedEvent& e)
+{
+	if (e.GetKeyCode() != GLFW_KEY_ESCAPE)
+	{
+		return;
+	}
+
+	setShouldWindowClose(true);
 }
 
 void CoolWindow::PollExit()

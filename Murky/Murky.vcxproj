@@ -159,6 +159,10 @@
     <ClInclude Include="src\Murky\core\application.h" />
     <ClInclude Include="src\Murky\core\core.h" />
     <ClInclude Include="src\Murky\core\entry_point.h" />
+    <ClInclude Include="src\Murky\events\ApplicationEvent.h" />
+    <ClInclude Include="src\Murky\events\Event.h" />
+    <ClInclude Include="src\Murky\events\KeyEvent.h" />
+    <ClInclude Include="src\Murky\events\MouseEvent.h" />
     <ClInclude Include="src\Murky\input\input_key.h" />
     <ClInclude Include="src\Murky\lighting\light.h" />
     <ClInclude Include="src\Murky\math\maths.h" />

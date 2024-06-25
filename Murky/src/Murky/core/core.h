@@ -11,4 +11,6 @@
 	#error Murky only suports Windows!
 #endif
 
+#define BIT(x) (1 << x)
+
 #endif

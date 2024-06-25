@@ -5,6 +5,10 @@
 #include "../rendering/shader.h"
 #include "../rendering/model.h"
 
+#include "../events/ApplicationEvent.h"
+#include "../events/KeyEvent.h"
+#include "../events/MouseEvent.h"
+
 #include <GLFW/glfw3.h>
 #include "../core/Log.h"
 
@@ -12,6 +16,11 @@ namespace Murky
 {
 	// Handles resizing the glViewport to match the Window's width and height
 	void framebuffer_size_callback(GLFWwindow* window, int width, int height);
+
+	static void GLFWErrorCallback(int error, const char* description)
+	{
+		MK_ENG_ERROR("GLFW Error ({0}): {1}", error, description);
+	}
 
 	Window::~Window()
 	{
@@ -23,11 +32,16 @@ namespace Murky
 	bool Window::Init(int width, int height, const std::string& title)
 	{
 		// Initialise GLFW Windows flags
-		glfwInit();
+		int success = glfwInit();
+		MK_ENG_ASSERT(success, "Could not initialise GLFW!");
+		glfwSetErrorCallback(GLFWErrorCallback);
+
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 		glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+
+
 
 		// CREATE the Window
 		m_wnd = glfwCreateWindow(width, height, title.c_str(), nullptr, nullptr);
@@ -38,7 +52,14 @@ namespace Murky
 			return false;
 		}
 
+		m_data.Width = width;
+		m_data.Height = height;
+		m_data.Title = title;
+
 		glfwMakeContextCurrent(m_wnd);
+		glfwSetWindowUserPointer(m_wnd, &m_data);
+		/// TODO: Set VSync here
+
 
 		// Initialise GLAD to manage function pointers before calling any OpenGL functions
 		if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
@@ -48,11 +69,99 @@ namespace Murky
 		}
 
 		// ----- Initialise Viewport -----
-		Vec2Int size = GetWindowSize();
 		// Define the bounds in which to draw pixels in the rendering window
-		glViewport(0, 0, size.x, size.y);
+		glViewport(0, 0, GetWidth(), GetHeight());
+
+
+
 		// Register callback to resize viewport when window size is changed
 		glfwSetFramebufferSizeCallback(m_wnd, framebuffer_size_callback);
+
+		// Set GLFW Callbacks
+		glfwSetWindowSizeCallback(m_wnd, [](GLFWwindow* window, int width, int height)
+		{
+			WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+			data.Width = width;
+			data.Height = height;
+
+			WindowResizeEvent event(width, height);
+			data.EventCallback(event);
+		});
+
+		glfwSetWindowCloseCallback(m_wnd, [](GLFWwindow* window)
+		{
+			WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+
+			WindowCloseEvent event;
+			data.EventCallback(event);
+		});
+
+		glfwSetKeyCallback(m_wnd, [](GLFWwindow* window, int key, int scancode, int action, int mods)
+		{
+			WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+
+			switch (action)
+			{
+				case GLFW_PRESS: 
+				{
+					KeyPressedEvent event(key, 0);
+					data.EventCallback(event);
+					break;
+				}
+				case GLFW_RELEASE: 
+				{
+					KeyReleasedEvent event(key);
+					data.EventCallback(event);
+					break;
+				}
+				case GLFW_REPEAT: 
+				{
+					KeyPressedEvent event(key, 1);
+					data.EventCallback(event);
+					break;
+				}
+			}
+		});
+
+		glfwSetMouseButtonCallback(m_wnd, [](GLFWwindow* window, int button, int action, int mods)
+		{
+			WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+
+			switch (action)
+			{
+				case GLFW_PRESS:
+				{
+					MouseButtonPressedEvent event(button);
+					data.EventCallback(event);
+					break;
+				}
+				case GLFW_RELEASE:
+				{
+					MouseButtonReleasedEvent event(button);
+					data.EventCallback(event);
+					break;
+				}
+			}
+		});
+
+		glfwSetScrollCallback(m_wnd, [](GLFWwindow* window, double xOffset, double yOffset) 
+		{
+			WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+
+			MouseScrolledEvent event((float)xOffset, (float)yOffset);
+			data.EventCallback(event);
+		});
+
+		glfwSetCursorPosCallback(m_wnd, [](GLFWwindow* window, double xPos, double yPos)
+		{
+			WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+
+			MouseMovedEvent event((float)xPos, (float)yPos);
+			data.EventCallback(event);
+		});
+
+		SetEventCallback(BIND_EVENT_FN(Window::OnEvent));
+
 
 		// Virtual call for child implementation
 		OnInit();
@@ -109,6 +218,20 @@ namespace Murky
 		pollWindowEvents();
 	}
 
+	void Window::OnEvent(Event& e)
+	{
+		EventDispatcher dispatcher(e);
+		dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(Window::OnWindowClose));
+
+		MK_ENG_TRACE("evebt {0}", e.ToString());
+	} 
+
+	bool Window::OnWindowClose(WindowCloseEvent& e)
+	{
+		setShouldWindowClose(true);
+		return true;
+	}
+
 	void Window::setShouldWindowClose(bool shouldClose) const noexcept
 	{
 		glfwSetWindowShouldClose(m_wnd, shouldClose);
@@ -134,12 +257,5 @@ namespace Murky
 	double Window::GetTime()
 	{
 		return glfwGetTime();
-	}
-
-	Murky::Vec2Int Murky::Window::GetWindowSize() const noexcept
-	{
-		Murky::Vec2Int sz{};
-		glfwGetWindowSize(m_wnd, &sz.x, &sz.y);
-		return sz;
 	}
 }
